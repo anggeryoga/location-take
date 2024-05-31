@@ -1,46 +1,41 @@
 # Location Taker
 
-Proyek ini menangkap geolokasi pengguna dan informasi perangkat kemudian mengirimkannya ke URL skrip Google Sheets yang ditentukan.
+This project captures the user's geolocation and device information and then sends it to the specified Google Sheets script URL.
 
-## Instruksi Penggunaan
+## Usage Instructions
 
-### Persiapan URL Spreadsheet
+### Spreadsheet URL Preparation
 
-1. Kunjungi repositori berikut untuk mendapatkan URL Spreadsheet:
+1. Visit the following repository to get the Spreadsheet URL:
    [Form to Google Sheets](https://github.com/jamiewilson/form-to-google-sheets)
 
-2. Buat tabel seperti gambar berikut, sesuaikan dengan kodingan form yang digunakan atau sesuai permintaan Anda:
+2. Create a table like the following image, adjust it with the form coding used or as per your requirements:
 ![image](https://github.com/anggeryoga/location-take/assets/139601862/b1073a15-7c8e-4fac-9f31-7795d1339cda)
-| Command | Description |
-| --- | --- |
-| `git status` | List all *new or modified* files |
-| `git diff` | Show file differences that **haven't been** staged |
 
-### Cara Penggunaan
+### How to Use
 
-1. Clone repository ke komputer lokal Anda:
+1. Clone the repository to your local computer:
 
     ```sh
-    git clone https://github.com/your-username/location-taker.git
-    cd location-taker
+    git clone https://github.com/anggeryoga/location-take.git
     ```
 
-2. Buka `index.html` di peramban web Anda.
+2. Open `index.html` in your web browser.
 
-3. Ketika halaman dimuat, pengguna akan diminta untuk mengizinkan akses lokasi. Jika pengguna memberikan izin, langkah-langkah berikut akan terjadi:
-   - Geolokasi pengguna (lintang dan bujur) akan ditangkap.
-   - Informasi perangkat seperti string user agent akan dikumpulkan.
+3. When the page loads, users will be prompted to allow location access. If users grant permission, the following steps will occur:
+   - The user's geolocation (latitude and longitude) will be captured.
+   - Device information such as the user agent string will be collected.
 
-4. Data yang ditangkap kemudian akan dikirim secara otomatis ke URL skrip Google Sheets yang telah ditentukan.
+4. The captured data will then be automatically sent to the specified Google Sheets script URL.
 
-### Catatan Penting
+### Important Notes
 
-- Pastikan peramban mendukung geolokasi. Sebagian besar peramban modern mendukung fitur ini, tetapi beberapa mungkin memerlukan HTTPS agar layanan geolokasi dapat berfungsi.
-- Pengguna harus memberikan izin untuk mengakses lokasi mereka. Jika izin ditolak, data lokasi tidak akan ditangkap dan pesan kesalahan akan dicatat di konsol.
+- Ensure that the browser supports geolocation. Most modern browsers support this feature, but some may require HTTPS for geolocation services to function.
+- Users must grant permission to access their location. If permission is denied, location data will not be captured and an error message will be logged in the console.
 
 ### Troubleshooting
 
-- Jika lokasi tidak bisa diambil, pastikan pengaturan lokasi di perangkat pengguna sudah diaktifkan.
-- Jika data tidak terkirim ke Google Sheets, cek kembali URL skrip yang digunakan dan pastikan tabel di Google Sheets sesuai dengan data yang dikirim.
+- If the location cannot be retrieved, make sure the location settings on the user's device are enabled.
+- If the data is not sent to Google Sheets, recheck the script URL used and ensure the table in Google Sheets matches the data being sent.
 
 ---
